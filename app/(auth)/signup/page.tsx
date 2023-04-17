@@ -1,5 +1,7 @@
 "use client";
+import VendorModal from "@/components/vendor-modal";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 enum USER_ROLE {
@@ -9,6 +11,12 @@ enum USER_ROLE {
 }
 export default function Signup() {
   const [userRole, setUserRole] = useState(USER_ROLE.CUSTOMER);
+  const [vendorModalOpen, setVendorModalOpen] = useState(false);
+  const router = useRouter();
+  const onRegister = () => {
+    if (userRole === USER_ROLE.VENDOR) return setVendorModalOpen(true);
+    router.push(userRole === USER_ROLE.ADMIN ? "/admin/dashboard" : "/");
+  };
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -29,10 +37,10 @@ export default function Signup() {
             <button
               type="button"
               onClick={() => setUserRole(USER_ROLE.CUSTOMER)}
-              className={`px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
+              className={`px-4 py-2 text-sm font-medium border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
                 userRole === USER_ROLE.CUSTOMER
                   ? "bg-blue-100 text-blue-700"
-                  : ""
+                  : "bg-white text-gray-900"
               }`}
             >
               Customer
@@ -40,8 +48,10 @@ export default function Signup() {
             <button
               type="button"
               onClick={() => setUserRole(USER_ROLE.VENDOR)}
-              className={`px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
-                userRole === USER_ROLE.VENDOR ? "bg-blue-100 text-blue-700" : ""
+              className={`px-4 py-2 text-sm font-medium  border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
+                userRole === USER_ROLE.VENDOR
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-white text-gray-900"
               }`}
             >
               Vendor
@@ -49,8 +59,10 @@ export default function Signup() {
             <button
               type="button"
               onClick={() => setUserRole(USER_ROLE.ADMIN)}
-              className={`px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
-                userRole === USER_ROLE.ADMIN ? "bg-blue-100 text-blue-700" : ""
+              className={`px-4 py-2 text-sm font-medium   border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
+                userRole === USER_ROLE.ADMIN
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-white text-gray-900"
               }`}
             >
               Admin
@@ -78,6 +90,21 @@ export default function Signup() {
               className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white"
             >
               Your email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="name@flowbite.com"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-indigo-900 dark:text-white"
+            >
+              Your phone number
             </label>
             <input
               type="email"
@@ -122,18 +149,12 @@ export default function Signup() {
               />
             </div>
           )}
-          <Link
-            href={
-              userRole === USER_ROLE.ADMIN
-                ? "/admin/dashboard"
-                : userRole === USER_ROLE.VENDOR
-                ? "/vendor/dashboard"
-                : "/"
-            }
+          <button
+            onClick={onRegister}
             className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
             Register
-          </Link>
+          </button>
         </form>
 
         <div className="mx-auto text-center">
@@ -145,6 +166,7 @@ export default function Signup() {
             Login now
           </Link>
         </div>
+        <VendorModal isOpen={vendorModalOpen} setIsOpen={setVendorModalOpen} />
       </div>
     </div>
   );

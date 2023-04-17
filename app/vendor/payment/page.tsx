@@ -7,20 +7,20 @@ import AnimatedNumber from "react-animated-number";
 export default function Payment() {
   return (
     <div className="bg-white rounded-lg shadow p-8">
-        <h1 className="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-          You need to pay{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r to-green-600 from-blue-400">
-            $
-            <AnimatedNumber
-              component="text"
-              value={20000}
-              duration={1000}
-              formatValue={(n: string) => parseInt(n).toLocaleString()}
-            />
-          </span>
-          <br />
-          in order to manage your products
-        </h1> 
+      <h1 className="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+        You need to pay{" "}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r to-green-600 from-blue-400">
+          $
+          <AnimatedNumber
+            component="text"
+            value={20000}
+            duration={1000}
+            formatValue={(n: string) => parseInt(n ?? 0).toLocaleString()}
+          />
+        </span>
+        <br />
+        in order to manage your products
+      </h1>
       <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
         Our system requires from you as a vendor to pay $20,000 USD as a down
         payment in order to be verified on our system and be able to manage your
@@ -129,7 +129,6 @@ export default function Payment() {
             className="rounded-md peer pl-12 pr-2 py-2 border-2 border-gray-200 placeholder-gray-300"
             type="text"
             name="card_cvc"
-            
             maxLength={4}
             placeholder="&bull;&bull;&bull;"
           />

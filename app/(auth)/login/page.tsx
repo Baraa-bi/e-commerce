@@ -55,7 +55,8 @@ const Page = () => {
         </form>
 
         <div className="mx-auto text-center">
-         {` Don't have an account?`}
+          {` Don't have an account? `}
+
           <Link
             href="/signup"
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"

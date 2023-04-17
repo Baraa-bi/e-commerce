@@ -56,7 +56,7 @@ export default function Admin() {
                 transitionProperty: "background-color, color, opacity",
               }}
               duration={600}
-              formatValue={(n: string) => parseInt(n)}
+              formatValue={(n: string) => parseInt(n ?? 0)}
             />
             <p className="text-2xl text-gray-400 dark:text-gray-400">
               {item.title}
