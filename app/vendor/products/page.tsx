@@ -31,10 +31,7 @@ export default function Vendors() {
               </th>
               <th scope="col" className="px-6 py-3">
                 Status
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Approve
-              </th>
+              </th> 
               <th scope="col" className="px-6 py-3">
                 Edit
               </th>
@@ -56,53 +53,7 @@ export default function Vendors() {
                   <td className="px-6 py-4">{item.category}</td>
                   <td className="px-6 py-4">${item.price}</td>
                   <td className="px-6 py-4">{item.status}</td>
-                  <td className="px-6 py-4">
-                    {item.status === "not-approved" ? (
-                      <button
-                        disabled
-                        className="text-emerald-700 cursor-pointer border border-emerald-700 hover:bg-emerald-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-emerald-500 dark:text-emerald-500 dark:hover:text-white dark:focus:ring-emerald-800 dark:hover:bg-emerald-500"
-                      >
-                        <svg
-                          fill="none"
-                          className="h-5 w-5"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
-                          ></path>
-                        </svg>
-                        <span className="sr-only">approve</span>
-                      </button>
-                    ) : (
-                      <button
-                        disabled
-                        type="button"
-                        className="py-2.5 px-2.5 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-700 focus:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
-                      >
-                        <svg
-                          fill="none"
-                          className="h-5 w-5"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
-                          ></path>
-                        </svg>
-                      </button>
-                    )}
-                  </td>
+                
                   <td className="px-6 py-4">
                     <Link
                       href="/admin/products/update-product"
