@@ -1,12 +1,31 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
+import type { ReactElement } from "react";
+import Features from "../components/home/features";
+import Hero from "../components/home/hero";
+import Products from "../components/home/products/products";
+import SectionTitle from "../components/home/sectionTitle";
+import Trending from "../components/home/trending/trending";
+import Layout from "../components/layout";
 
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home() {
+const Page = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
-    </main>
-  )
-}
+    <div className="">
+      <Navbar/>
+      <Hero />
+      <Features />
+      <SectionTitle title="Checkout our Featured Products" />
+      <Products />
+      <Trending />
+      <SectionTitle title="Best Seller Products" />
+      <Products />
+      <Footer/>
+    </div>
+  );
+};
+
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Page;

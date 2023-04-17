@@ -7,13 +7,22 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Vendors() {
   return (
     <>
+        <div className="absolute right-12 top-12">
+          <Link
+            href="/vendor/payment"
+            type="button"
+            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+          >
+            Add Product
+          </Link>
+        </div>
       <div className="relative overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Product name
-              </th> 
+              </th>
               <th scope="col" className="px-6 py-3">
                 Category
               </th>
@@ -43,7 +52,7 @@ export default function Vendors() {
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     {item.name}
-                  </th> 
+                  </th>
                   <td className="px-6 py-4">{item.category}</td>
                   <td className="px-6 py-4">${item.price}</td>
                   <td className="px-6 py-4">{item.status}</td>
@@ -119,9 +128,7 @@ export default function Vendors() {
                     </Link>
                   </td>
                   <td className="px-6 py-4">
-                    <button
-                      className="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500"
-                    >
+                    <button className="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
                       <svg
                         fill="none"
                         stroke="currentColor"
@@ -178,7 +185,7 @@ const data = [
     category: "Laptops",
     price: 3000,
     status: "approved",
-  }, 
+  },
   {
     id: 8,
     name: "Macbook pro M2",

@@ -10,7 +10,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <html>
       <head />
-      <body>
+      <body className="h-screen w-screen candy-mesh p-6">
+    
         <>
           <button
             data-drawer-target="default-sidebar"
@@ -44,7 +45,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <ul className="space-y-2 font-medium">
                 <li>
                   <Link
-                    href={"/admin/dashboard"}
+                    href={"/vendor/dashboard"}
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -59,52 +60,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     </svg>
                     <span className="ml-3">Dashboard</span>
                   </Link>
-                </li>
+                </li>  
                 <li>
                   <Link
-                    href={"/admin/vendors"}
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                    </svg>
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                      Vendors
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={"/admin/customers"}
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                      Customers
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={"/admin/products"}
+                    href={"/vendor/products"}
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -127,7 +86,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 </li>
                 <li>
                   <Link
-                    href={"/admin/orders"}
+                    href={"/vendor/orders"}
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -176,7 +135,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </aside>
         </>
         <div className="p-4 sm:ml-64">
-          <span className="text-4xl font-bold capitalize">{pathname.substring(7)}</span>
+          <span className="text-4xl font-bold capitalize">{pathname.substring(8)}</span>
           <div className="mt-8">{children}</div>
         </div>
       </body>
