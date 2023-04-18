@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const products = [
   {
     id: 1,
@@ -26,8 +28,8 @@ const products = [
 ];
 export default function Cart() {
   return (
-    <div className="bg-white p-8 rounded m-16">
-      <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
+    <div className=" p-8 rounded m-16">
+      <div className="grid sm:px-10 lg:grid-cols-2 lg:px-10 xl:px-12">
         <div className="px-4 pt-8">
           <p className="text-xl font-medium">Order Summary</p>
           <p className="text-gray-400">
@@ -282,9 +284,11 @@ export default function Cart() {
               <p className="text-2xl font-semibold text-gray-900">$408.00</p>
             </div>
           </div>
-          <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
-            Place Order
-          </button>
+          <Link href="/customer/orders">
+            <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
+              Place Order
+            </button>
+          </Link>
         </div>
       </div>
     </div>
