@@ -6,17 +6,27 @@ import Hero from "../../components/home/hero";
 import Products from "../../components/home/products/products";
 import SectionTitle from "../../components/home/sectionTitle";
 import Trending from "../../components/home/trending/trending";
+import { productApi } from "@/lib/apis/product";
 
-const Page = () => {
+const getData = () => {
+  return productApi
+    .verified()
+    .then(({ data }) => data.slice(0, 9))
+    .catch((e) => []);
+};
+
+const Page = async () => {
+  const products = await getData();
+  console.log({ products });
   return (
     <div className="">
       <Hero />
       <Features />
       <SectionTitle title="Checkout our Featured Products" />
-      <Products />
+      <Products products={products} />
       <Trending />
       <SectionTitle title="Best Seller Products" />
-      <Products />
+      <Products products={products} />
     </div>
   );
 };
