@@ -1,13 +1,20 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Link from "next/link";
+import SectionTitle from "@/components/section-title";
+import { orderApi } from "@/lib/apis/orders";
+import { Order } from "@/lib/types";
 
-const inter = Inter({ subsets: ["latin"] });
+const getData = () => {
+  return orderApi
+    .all()
+    .then(({ data }) => data?.orderList ?? [])
+    .catch((e) => []);
+};
 
-export default function Orders() {
+export default async function Orders() {
+  const orders = await getData();
   return (
     <>
-      <div className="relative overflow-x-auto">
+      <SectionTitle title="Orders" />
+      <div className="shadow-xl rounded-xl  relative overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -15,7 +22,10 @@ export default function Orders() {
                 Order Id
               </th>
               <th scope="col" className="px-6 py-3">
-                Category
+                Order Date
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
               </th>
               <th scope="col" className="px-6 py-3">
                 Total
@@ -26,69 +36,33 @@ export default function Orders() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => {
+            {orders?.map((item: Order) => {
+              const user = JSON.parse(item.userInfo);
               return (
                 <tr key={item.id} className="bg-white dark:bg-gray-800">
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {item.name}
+                    {item.id}
                   </th>
-                  <td className="px-6 py-4">{item.category}</td>
-                  <td className="px-6 py-4">${item.price}</td>
-                  <td className="px-6 py-4">{item.customer}</td>
+                  <td className="px-6 py-4">
+                    {new Date(item.orderDate).toLocaleString()}
+                  </td>
+                  <td className="px-6 py-4">{item.orderStatus}</td>
+                  <td className="px-6 py-4">${item.totalPrice}</td>
+                  <td className="px-6 py-4">{user?.name}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        {!orders.length && (
+          <div className="text-lg capitalize text-gray-500 bg-white w-full p-8 h-64 flex flex-col items-center justify-center">
+            no data found
+          </div>
+        )}
       </div>
     </>
   );
 }
-
-const data = [
-  {
-    id: 21,
-    name: "Macbook pro M2",
-    category: "Laptops",
-    price: 3000,
-    customer: "Baraa",
-  },
-  {
-    id: 25,
-    name: "Macbook pro M2",
-    category: "Laptops",
-    price: 3000,
-    customer: "Godwin",
-  },
-  {
-    id: 23,
-    name: "Macbook pro M2",
-    category: "Laptops",
-    price: 3000,
-    customer: "Godwin",
-  },
-  {
-    id: 13,
-    name: "Macbook pro M2",
-    category: "Laptops",
-    price: 3000,
-    customer: "Baraa",
-  },
-  {
-    id: 8,
-    name: "Macbook pro M2",
-    category: "Laptops",
-    price: 3000,
-    customer: "Godwin",
-  },
-  {
-    id: 9,
-    name: "Macbook pro M2",
-    category: "Laptops",
-    price: 3000,
-    customer: "Godwin",
-  },
-];
