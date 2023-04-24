@@ -91,7 +91,7 @@ export default function GuestCheckout() {
   if (!Object.keys(productLines)?.length)
     return (
       <>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex h-full flex-col items-center justify-center">
           <div className="mb-3 text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r to-indigo-600 from-blue-400">
             No Cart items..!
           </div>

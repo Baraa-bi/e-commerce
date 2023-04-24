@@ -11,11 +11,8 @@ import { productApi } from "@/lib/apis/product";
 const getData = () => {
   return productApi
     .verified()
-    .then(({ data }) => data.slice(0, 9))
-    .catch((e) => {
-    console.log(e.response.data)
-     return [];
-    });
+    .then(({ data }) => data)
+    .catch((e) => []);
 };
 
 const Page = async () => {

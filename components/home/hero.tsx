@@ -3,11 +3,13 @@ export default function Hero() {
     <section className="bg-slate-100 p-8 rounded-xl">
       <div className="mx-auto grid max-w-screen-xl px-4 pt-8 lg:grid-cols-12 lg:gap-8 xl:gap-0">
         <div className="mr-auto place-self-center lg:col-span-7">
-          <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl">
-            Trendy Collection
+          <h1 className="font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">
+            Welcome To Shoppify
           </h1>
-          <p className="mb-6 max-w-2xl font-light text-slate-700  md:text-lg lg:mb-8 lg:text-xl">
-            New Modern Stylish Fashionable Mens Wear Shirt
+          
+          <p className="mt-6 max-w-2xl font-light text-slate-700  md:text-lg lg:mb-8 lg:text-xl">
+            New Modern Stylish Fashionable Products
+             that you <br/>will be happy to order.
           </p>
           <a
             href="#"

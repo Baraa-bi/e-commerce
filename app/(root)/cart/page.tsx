@@ -27,8 +27,8 @@ export default async function Cart() {
     <div className="bg-white p-4 rounded m-16">
       <div className="grid sm:px-10 lg:grid-cols-2 lg:px-10 xl:px-12">
         <div className="px-4 pt-8">
-          <div className="relative mt-8 rounded-xl border-indigo-100 border  px-2 py-4 sm:px-6">
-            <p className="text-xl font-medium">Order Summary</p>
+          <div className="relative mt-8 rounded-xl  px-2 py-4 sm:px-6">
+            <p className="text-2xl font-medium">Order Summary</p>
             <p className="text-gray-400">Check your items. And checkout.</p>
             {user ? (
               !shoppingCart?.cartLines?.length ? (
