@@ -1,13 +1,12 @@
 "use client";
 
 import { CartContext } from "@/lib/contexts/cart";
-import { CartItem } from "@/lib/types";
+import { CartItem, USER_ROLE } from "@/lib/types";
 import { useContext, useState } from "react";
 
 export default function AddToCart({ cartItem }: { cartItem: CartItem }) {
   const [quantity, setQuantity] = useState(1);
   const { addItemToCart } = useContext(CartContext);
-  console.log({cartItem});
   return (
     <>
       <div className="flex my-8 items-center justify-between">
@@ -34,7 +33,12 @@ export default function AddToCart({ cartItem }: { cartItem: CartItem }) {
       </div>
       <div className="flex mt-10">
         <button
-          onClick={() => addItemToCart({ ...cartItem, quantity })}
+          onClick={() =>
+            addItemToCart(
+              { ...cartItem, quantity },
+              cartItem?.userId ? USER_ROLE.REGISTERED_USER : USER_ROLE.GUEST
+            )
+          }
           type="button"
           className="w-full uppercase text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-base px-6 py-3.5 text-center mr-2 mb-2"
         >

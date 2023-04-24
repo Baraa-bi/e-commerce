@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import Link from "next/link";
 import { USER_ROLE, User } from "@/lib/types";
 import { authApi } from "@/lib/apis/auth";
+import { AnyARecord } from "dns";
 
 export default function UserForm({ user }: { user: any }) {
   const router = useRouter();
@@ -13,10 +13,12 @@ export default function UserForm({ user }: { user: any }) {
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
+    delete formData.authorities;
     authApi.updateUser(user.userId, { ...formData }).then(() => {
       router.back();
+      router.refresh();
     });
-  }; 
+  };
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg">
       <form onSubmit={onFormSubmit}>
@@ -35,7 +37,7 @@ export default function UserForm({ user }: { user: any }) {
                 required
                 value={formData.name}
                 onChange={(e) =>
-                  setFormData((f) => {
+                  setFormData((f: any) => {
                     return { ...f, name: e.target.value };
                   })
                 }
@@ -55,7 +57,7 @@ export default function UserForm({ user }: { user: any }) {
                 required
                 value={formData.email}
                 onChange={(e) =>
-                  setFormData((f) => {
+                  setFormData((f: any) => {
                     return { ...f, email: e.target.value };
                   })
                 }
@@ -75,7 +77,7 @@ export default function UserForm({ user }: { user: any }) {
                 required
                 value={formData.telephoneNumber}
                 onChange={(e) =>
-                  setFormData((f) => {
+                  setFormData((f: any) => {
                     return { ...f, telephoneNumber: e.target.value };
                   })
                 }

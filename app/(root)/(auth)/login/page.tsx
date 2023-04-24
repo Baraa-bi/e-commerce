@@ -2,18 +2,22 @@
 
 import { authApi } from "@/lib/apis/auth";
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { COOKIE_NAME } from "@/lib/constants";
 import cookie from "react-cookies";
 import { useRouter } from "next/navigation";
 import { decodeJwt } from "jose";
 import { USER_ROLE } from "@/lib/types";
+import Loading from "../loading";
+import Button from "@/components/buttont";
 
 const Page = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const login = () => {
+    setLoading(true);
     authApi
       .login({ username: userName, password })
       .then(({ data }) => {
@@ -21,15 +25,19 @@ const Page = () => {
         return data;
       })
       .then((jwt) => {
+        setLoading(false);
         const user = decodeJwt(jwt) as any;
-        if (user?.roles.includes(USER_ROLE.ADMIN))
+        if (user?.role.includes(USER_ROLE.ADMIN))
           router.push("/admin/dashboard");
-        if (user?.roles.includes(USER_ROLE.VENDOR))
+        if (user?.role.includes(USER_ROLE.VENDOR))
           router.push("/vendor/dashboard");
-        if (user?.roles.includes(USER_ROLE.REGISTERED_USER)) router.push("/");
+        if (user?.role.includes(USER_ROLE.REGISTERED_USER)) router.push("/");
         router.refresh();
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        setLoading(false);
+        console.log(e);
+      });
   };
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -78,13 +86,14 @@ const Page = () => {
               onChange={(e: any) => setPassword(e.target.value)}
             />
           </div>
-          <button
-            type="button"
-            onClick={() => login()}
-            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+          <Button
+            type="submit"
+            onClick={login}
+            loading={loading}
+            className="text-white w-full bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3.5 text-center mr-2 mb-2"
           >
             Login
-          </button>
+          </Button>
         </form>
 
         <div className="mx-auto text-center">

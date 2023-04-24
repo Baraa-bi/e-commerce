@@ -1,7 +1,7 @@
 "use client";
 import { categoriesApi } from "@/lib/apis/category";
 import { productApi } from "@/lib/apis/product";
-import { Category, Product, User } from "@/lib/types";
+import { Category, Product, USER_ROLE, User } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -10,9 +10,11 @@ const DEFAULT_IMAGE =
 export default function ProductForm({
   product,
   user,
+  role,
 }: {
   product?: Product;
   user?: User;
+  role: USER_ROLE;
 }) {
   const [categories, setCategories] = useState<Array<Category>>([]);
   //@ts-ignore
@@ -39,13 +41,17 @@ export default function ProductForm({
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (product)
+    if (product?.productId)
       return productApi.update(product.productId, formData as any).then(() => {
-        router.back();
+        router.push(
+          role === USER_ROLE.ADMIN ? "/admin/products" : "/vendor/products"
+        );
         router.refresh();
       });
-    productApi.create({ ...formData, userId: user?.id } as any).then(() => {
-      router.back();
+    productApi.create({ ...formData, userId: user?.userId } as any).then(() => {
+      router.push(
+        role === USER_ROLE.ADMIN ? "/admin/products" : "/vendor/products"
+      );
       router.refresh();
     });
   };

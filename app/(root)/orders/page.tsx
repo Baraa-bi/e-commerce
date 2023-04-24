@@ -15,10 +15,10 @@ const getData = async () => {
 
 export default async function Orders() {
   const orders = await getData();
-  console.log(orders);
+  console.log({ orders });
   return (
-    <div>
-      <SectionTitle title="Orders" />
+    <div className="m-24">
+      <SectionTitle title="My Orders" />
       <div className="shadow-xl rounded-xl  relative overflow-x-auto">
         <table className="shadow-xl rounded-xl w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

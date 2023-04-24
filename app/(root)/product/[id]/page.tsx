@@ -43,7 +43,7 @@ export default async function Product({ params }: { params: { id: number } }) {
             </div>
             <AddToCart
               cartItem={{
-                userId: user.id,
+                userId: user?.userId,
                 productDTO: { ...product, userId: product.user.userId },
               }}
             />

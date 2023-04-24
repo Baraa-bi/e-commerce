@@ -1,14 +1,34 @@
 "use client";
 
 import { productApi } from "@/lib/apis/product";
+import { reportApi } from "@/lib/apis/report";
+import { ModalContext } from "@/lib/contexts/modal";
 import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 
-export default function DeleteProduct({ productId }: { productId: any }) {
-  const router = useRouter();
-
+export default function DeleteProduct({
+  productId,
+  userId,
+}: {
+  productId: number;
+  userId?: number;
+}) {
+  const { showModal } = useContext(ModalContext);
   const deleteProduct = () => {
-    productApi.delete(productId).then(() => {
-      router.refresh();
+    if (userId)
+      return showModal({
+        title: "Delete Product?",
+        text: "Tell us about the reason, so we will tell the vendor about it",
+        layout: (h: any) => (
+          <DeleteForm userId={userId} productId={productId} hideModal={h} />
+        ),
+      });
+    showModal({
+      title: "Delete Product?",
+      text: "Are You sure from deleting this product?",
+      layout: (h: any) => (
+        <DeleteForm userId={userId} productId={productId} hideModal={h} />
+      ),
     });
   };
 
@@ -36,3 +56,45 @@ export default function DeleteProduct({ productId }: { productId: any }) {
     </button>
   );
 }
+
+const DeleteForm = ({ hideModal, productId, userId }: any) => {
+  const router = useRouter();
+  const [message, setMessage] = useState("");
+  const onDelete = () => {
+    hideModal();
+    productApi.delete(productId).then(() => {
+      if (userId) reportApi.sendEmail(userId, message);
+      router.refresh();
+    });
+  };
+  return (
+    <>
+      {userId && (
+        <textarea
+          id="message"
+          rows={4}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Category description..."
+        />
+      )}
+      <div className="mt-4 gap-4 flex">
+        <button
+          type="button"
+          onClick={onDelete}
+          className={`inline-flex bg-red-200 hover:bg-red-200 justify-center rounded-md border border-transparent  px-4 py-2 text-sm font-medium text-red-900  focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2`}
+        >
+          Delete
+        </button>
+        <button
+          type="button"
+          onClick={hideModal}
+          className={`inline-flex bg-blue-100 hover:bg-blue-200 justify-center rounded-md border border-transparent  px-4 py-2 text-sm font-medium text-blue-900  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
+        >
+          Dismiss
+        </button>
+      </div>
+    </>
+  );
+};

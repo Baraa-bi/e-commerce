@@ -6,6 +6,8 @@ import VerifyVendor from "@/components/verify-vendor";
 import { Inter } from "next/font/google";
 import SectionTitle from "@/components/section-title";
 import DeleteUser from "@/components/delete-user";
+import { Suspense } from "react";
+import Loading from "../loading";
 const inter = Inter({ subsets: ["latin"] });
 
 const getData = async () => {

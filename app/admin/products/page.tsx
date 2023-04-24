@@ -18,7 +18,6 @@ const getData = async () => {
 
 export default async function Products() {
   const products = await getData();
-  console.log({ products });
   return (
     <>
       <SectionTitle title="Products" />
@@ -81,8 +80,8 @@ export default async function Products() {
                   <td className="px-6 py-4">
                     {!item.verified ? (
                       <VerifyProduct
-                        userId={item?.user?.id}
                         productId={item.productId}
+                        userId={item?.user?.userId}
                       />
                     ) : (
                       <button
@@ -133,13 +132,21 @@ export default async function Products() {
                     </Link>
                   </td>
                   <td className="px-6 py-4">
-                    <DeleteProduct productId={item.productId} />
+                    <DeleteProduct
+                      userId={item?.user?.userId}
+                      productId={item.productId}
+                    />
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        {!products.length && (
+          <div className="text-lg capitalize text-gray-500 bg-white w-full p-8 h-64 flex flex-col items-center justify-center">
+            no data found
+          </div>
+        )}
       </div>
     </>
   );

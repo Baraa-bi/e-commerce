@@ -1,20 +1,17 @@
 "use client";
 
 import { orderApi } from "@/lib/apis/orders";
+import { CartContext } from "@/lib/contexts/cart";
 import { ModalContext } from "@/lib/contexts/modal";
-import { ShoppingCart, User } from "@/lib/types";
+import { Product, ShoppingCart, User } from "@/lib/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { userInfo } from "os";
 import { FormEvent, useContext, useState } from "react";
 
-export default function Checkout({
-  user,
-  shoppingCart,
-}: {
-  user: User;
-  shoppingCart: ShoppingCart;
-}) {
+export default function GuestCheckout() {
   const router = useRouter();
+  const { productLines, totalPrice } = useContext(CartContext);
   const { showModal } = useContext(ModalContext);
   const [formData, setFormData] = useState<any>({
     paymentInfoDTO: {
@@ -23,15 +20,11 @@ export default function Checkout({
       cardExpiry: "",
       ccv: "",
     },
-    ...(user
-      ? { userId: user.userId }
-      : {
-          userInfo: {
-            name: "",
-            email: "",
-            telephoneNumber: "",
-          },
-        }),
+    userInfo: {
+      name: "",
+      email: "",
+      telephoneNumber: "",
+    },
   });
 
   const updateCardInfoValue = (key: string, value: string) => {
@@ -52,24 +45,51 @@ export default function Checkout({
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    orderApi.placeOrder(formData).then(() => {
-      showModal({
-        title: "Your Order Placed Successfully",
-        text: "Thank you, your order has been placed",
-        actions: [
-          {
-            title: "Go To My Orders",
-            onPress: (h: any) => {
-              h();
-              router.push("/orders");
-            },
-          },
-        ],
-      });
+
+    const shoppingCart = {
+      totalPrice,
+      cartLines: Object.keys(productLines).map((key) => {
+        const productLine = productLines[key];
+        const product = JSON.parse(productLine.productInfo) as Product;
+        return {
+          userId: product.userId,
+          productId: product.productId,
+          quantity: productLine.quantity,
+          price: product.price,
+          productInfo: productLine.productInfo,
+        };
+      }),
+    };
+
+    console.log({
+      userInfo: formData.userInfo,
+      paymentInfoDTO: formData.paymentInfoDTO,
+      shoppingCart,
     });
+
+    orderApi.placeOrderForGuestUser(formData.userInfo, {
+      paymentInfoDTO: formData.paymentInfoDTO,
+      shoppingCart
+    });
+
+    // orderApi.placeOrderForGuestUser(formData).then(() => {
+    //   showModal({
+    //     title: "Your Order Placed Successfully",
+    //     text: "Thank you, your order has been placed",
+    //     actions: [
+    //       {
+    //         title: "Go To My Orders",
+    //         onPress: (h: any) => {
+    //           h();
+    //           router.push("/orders");
+    //         },
+    //       },
+    //     ],
+    //   });
+    // });
   };
 
-  if (!shoppingCart?.cartLines?.length)
+  if (!Object.keys(productLines)?.length)
     return (
       <>
         <div className="flex flex-col items-center justify-center">
@@ -93,121 +113,116 @@ export default function Checkout({
 
   return (
     <form onSubmit={onFormSubmit}>
-      {" "}
       <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
         <p className="text-xl font-medium">Payment Details</p>
         <p className="text-gray-400">
           Complete your order by providing your payment details.
         </p>
-        {!user && (
-          <>
-            {" "}
-            <div className="flex gap-2">
-              <div className="w-full">
-                <label
-                  htmlFor="email"
-                  className="mt-4 mb-2 block text-sm font-medium"
+
+        <div className="flex gap-2">
+          <div className="w-full">
+            <label
+              htmlFor="email"
+              className="mt-4 mb-2 block text-sm font-medium"
+            >
+              Name
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                placeholder="your.email@gmail.com"
+                onChange={(e) => updateUserInfo("name", e.target.value)}
+              />
+              <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
                 >
-                  Name
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="your.email@gmail.com"
-                    onChange={(e) => updateUserInfo("name", e.target.value)}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
                   />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full">
-                <label
-                  htmlFor="email"
-                  className="mt-4 mb-2 block text-sm font-medium"
-                >
-                  Telephone Number
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="number"
-                    name="number"
-                    className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="+1 641 123 1233"
-                    onChange={(e) =>
-                      updateUserInfo("telephoneNumber", e.target.value)
-                    }
-                  />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                      />
-                    </svg>
-                  </div>
-                </div>
+                </svg>
               </div>
             </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="mt-4 mb-2 block text-sm font-medium"
+          </div>
+          <div className="w-full">
+            <label
+              htmlFor="email"
+              className="mt-4 mb-2 block text-sm font-medium"
+            >
+              Telephone Number
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                id="number"
+                name="number"
+                className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                placeholder="+1 641 123 1233"
+                onChange={(e) =>
+                  updateUserInfo("telephoneNumber", e.target.value)
+                }
+              />
+              <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            htmlFor="email"
+            className="mt-4 mb-2 block text-sm font-medium"
+          >
+            Email
+          </label>
+          <div className="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={(e) => updateUserInfo("email", e.target.value)}
+              className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="your.email@gmail.com"
+            />
+            <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                Email
-              </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  onChange={(e) => updateUserInfo("email", e.target.value)}
-                  className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="your.email@gmail.com"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
                 />
-                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                    />
-                  </svg>
-                </div>
-              </div>
+              </svg>
             </div>
-          </>
-        )}
+          </div>
+        </div>
         <label
           htmlFor="card-holder"
           className="mt-4 mb-2 block text-sm font-medium"
@@ -340,14 +355,14 @@ export default function Checkout({
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Subtotal</p>
             <p className="font-semibold text-gray-900">
-              $ ${parseFloat(`${shoppingCart.totalPrice}`).toFixed(2)}
+              $ ${parseFloat(`${totalPrice}`).toFixed(2)}
             </p>
           </div>
         </div>
         <div className="mt-6 flex items-center justify-between">
           <p className="text-sm font-medium text-gray-900">Total</p>
           <p className="text-2xl font-semibold text-gray-900">
-            ${parseFloat(`${shoppingCart.totalPrice}`).toFixed(2)}
+            ${parseFloat(`${totalPrice}`).toFixed(2)}
           </p>
         </div>
         <button

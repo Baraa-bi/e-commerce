@@ -8,7 +8,10 @@ const getData = () => {
     .then(({ data }) => {
       return data;
     })
-    .catch((e) => []);
+    .catch((e) => {
+      console.log(e.response.data);
+      return [];
+    });
 };
 
 export default async function Signup() {

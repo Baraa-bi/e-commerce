@@ -10,7 +10,7 @@ import DeleteProduct from "@/components/product/delete-product";
 const getData = async () => {
   const user = await getUserFromCookie(cookies() as RequestCookies);
   const products = (await productApi
-    .allByUserId(user.id)
+    .allByUserId(user.userId)
     .then(({ data }) => data)
     .catch((e) => [])) as Array<Product>;
   return { user, products };
@@ -18,6 +18,7 @@ const getData = async () => {
 
 export default async function Products() {
   const { user, products } = await getData();
+
   return (
     <>
       <SectionTitle title="Products">
@@ -113,6 +114,11 @@ export default async function Products() {
             })}
           </tbody>
         </table>
+        {!products.length && (
+          <div className="text-lg capitalize text-gray-500 bg-white w-full p-8 h-64 flex flex-col items-center justify-center">
+            no data found
+          </div>
+        )}
       </div>
     </>
   );

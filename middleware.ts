@@ -17,6 +17,7 @@ export default async function middleware(req: NextRequest, res: NextResponse) {
     pathname.startsWith("/static") ||
     pathname.startsWith("/login") ||
     pathname.startsWith("/signup") ||
+    pathname.startsWith("/") ||
     PUBLIC_FILE.test(pathname)
   ) {
     return NextResponse.next();

@@ -5,7 +5,7 @@ import { Order } from "@/lib/types";
 const getData = () => {
   return orderApi
     .all()
-    .then(({ data }) => data)
+    .then(({ data }) => data?.orderList ?? [])
     .catch((e) => []);
 };
 
@@ -36,7 +36,8 @@ export default async function Orders() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((item: Order) => {
+            {orders?.map((item: Order) => {
+              const user = JSON.parse(item.userInfo);
               return (
                 <tr key={item.id} className="bg-white dark:bg-gray-800">
                   <th
@@ -45,10 +46,12 @@ export default async function Orders() {
                   >
                     {item.id}
                   </th>
-                  <td className="px-6 py-4">{item.orderDate}</td>
+                  <td className="px-6 py-4">
+                    {new Date(item.orderDate).toLocaleString()}
+                  </td>
                   <td className="px-6 py-4">{item.orderStatus}</td>
                   <td className="px-6 py-4">${item.totalPrice}</td>
-                  <td className="px-6 py-4">{item?.userInfo?.name}</td>
+                  <td className="px-6 py-4">{user?.name}</td>
                 </tr>
               );
             })}

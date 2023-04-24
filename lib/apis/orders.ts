@@ -4,21 +4,21 @@ import { OrderDetails, User } from "../types";
 
 export const orderApi = {
   all: () => {
-    return request.get(`${ORDER_URL}/orders`);
+    return request.get(`${ORDER_URL}/api/v1/orders`);
   },
   placeOrder: (orderDetails: OrderDetails) => {
-    return request.post(`${ORDER_URL}/orders`, orderDetails);
+    return request.post(`${ORDER_URL}/api/v1/orders`, orderDetails);
   },
   placeOrderForGuestUser: (userInfo: User, orderDetails: OrderDetails) => {
-    return request.post(`${ORDER_URL}/orders/guestUser`, {
+    return request.post(`${ORDER_URL}/api/v1/orders/guestUser`, {
       userInfo,
       ...orderDetails,
     });
   },
   getById: (orderId: number) => {
-    return request.get(`${ORDER_URL}/orders/${orderId}`);
+    return request.get(`${ORDER_URL}/api/v1/orders/${orderId}`);
   },
   ordersByUserId: (userId: number) => {
-    return request.get(`${ORDER_URL}/orders/users/${userId}`);
+    return request.get(`${ORDER_URL}/api/v1/orders/users/${userId}`);
   },
 };

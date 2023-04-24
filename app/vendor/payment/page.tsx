@@ -33,16 +33,22 @@ export default function Payment() {
     return <GenericCardIcon />;
   }, [formData.cardNumber]);
 
-  const onSubmitPayment = (e: FormEvent) => {
+  const onSubmitPayment = async (e: FormEvent) => {
     e.preventDefault();
-    const user = getUser();
+    const user = await getUser();
+    console.log({ user, c: user.userId });
     paymentApi
-      .vendorRegistrationFee(user?.id, formData)
+      .vendorRegistrationFee(user.userId, formData)
       .then(() => {
-        authApi.fullyVerifyVendor(user.id).then(({ data }) => {
-          cookie.save(COOKIE_NAME, data, { path: "/" });
-          router.push("/vendor/products/add-product");
-        });
+        return authApi
+          .fullyVerifyVendor(user.userId)
+          .then(({ data }) => {
+            cookie.save(COOKIE_NAME, data, { path: "/" });
+            router.push("/vendor/products/add-product");
+          })
+          .catch((e) => {
+            console.log(e.response);
+          });
       })
       .catch((e) => {
         showModal({
@@ -243,7 +249,7 @@ export default function Payment() {
 const VisaCardIcon = () => {
   return (
     <svg
-      enable-background="new 0 0 780 500"
+      enableBackground="new 0 0 780 500"
       height="500"
       viewBox="0 0 780 500"
       width="780"
@@ -269,7 +275,7 @@ const VisaCardIcon = () => {
 const MasterCardIcon = () => {
   return (
     <svg
-      enable-background="new 0 0 780 500"
+      enableBackground="new 0 0 780 500"
       height="500"
       viewBox="0 0 780 500"
       width="780"

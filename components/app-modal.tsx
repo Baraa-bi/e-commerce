@@ -5,7 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useMemo } from "react";
 
 export default function AppModal() {
-  const { hideModal, isVisible, title, text, actions } =
+  const { hideModal, isVisible, title, layout, text, actions } =
     useContext(ModalContext);
 
   const renderActions = useMemo(() => {
@@ -15,7 +15,9 @@ export default function AppModal() {
         type="button"
         onClick={() => item.onPress(hideModal)}
         className={`inline-flex  justify-center rounded-md border border-transparent  px-4 py-2 text-sm font-medium text-blue-900  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
-          item.primary ? "bg-blue-100 hover:bg-blue-200" : "bg-gray-100 hover:bg-gray-200"
+          item.primary
+            ? "bg-blue-100 hover:bg-blue-200"
+            : "bg-gray-100 hover:bg-gray-200"
         }`}
       >
         {item.title}
@@ -26,7 +28,7 @@ export default function AppModal() {
   return (
     <>
       <Transition appear show={isVisible} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={hideModal}>
+        <Dialog as="div" className="relative z-10" onClose={() => null}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -58,6 +60,10 @@ export default function AppModal() {
                     {title}
                   </Dialog.Title>
                   <div className="mt-2">{text}</div>
+
+                  {!!layout && (
+                    <div className="mt-4">{layout(hideModal)}</div>
+                  )}
                   <div className="mt-4 gap-4 flex">{renderActions}</div>
                 </Dialog.Panel>
               </Transition.Child>

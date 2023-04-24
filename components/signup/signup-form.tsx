@@ -23,7 +23,7 @@ export default function SignupForm({ roles }: { roles: Array<any> }) {
   const [formData, setFormData] = useState(INIT_STATE);
   const [vendorModalOpen, setVendorModalOpen] = useState(false);
   const router = useRouter();
-
+  
   const onRegister = (e: FormEvent) => {
     e.preventDefault();
     const user = { ...formData, roles: [userRole] } as User;

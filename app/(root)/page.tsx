@@ -12,7 +12,10 @@ const getData = () => {
   return productApi
     .verified()
     .then(({ data }) => data.slice(0, 9))
-    .catch((e) => []);
+    .catch((e) => {
+    console.log(e.response.data)
+     return [];
+    });
 };
 
 const Page = async () => {

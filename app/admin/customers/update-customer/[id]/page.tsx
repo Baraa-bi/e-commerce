@@ -18,8 +18,8 @@ export default async function UpdateCustomer({
   const user = (await getData(params.id)) as User;
   return (
     <>
-      <SectionTitle title="Update Customer" /> 
-        <UserForm user={user} /> 
+      <SectionTitle title="Update Customer" />
+      <UserForm user={user} />
     </>
   );
 }

@@ -10,6 +10,7 @@ interface ActionProps {
 interface Props {
   title?: any;
   text?: any;
+  layout?: any;
   isVisible?: any;
   actions?: Array<ActionProps>;
   children: any;
@@ -19,6 +20,7 @@ const INIT_STATE = {
   isVisible: false,
   title: "",
   text: "",
+  layout: (_: any) => null,
   actions: [],
   hideModal: () => null,
   showModal: (props: any) => props,

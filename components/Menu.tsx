@@ -1,11 +1,12 @@
 "use client";
 import { User } from "@/lib/types";
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import { COOKIE_NAME } from "@/lib/constants";
 import cookie from "react-cookies";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Logout from "./logout";
 
 export default function HeaderMenu({ user }: { user: User }) {
   const router = useRouter();
@@ -31,30 +32,32 @@ export default function HeaderMenu({ user }: { user: User }) {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <Link href="/login" className="px-1 py-1 ">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-indigo-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <EditActiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <EditInactiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Login
-                  </button>
-                )}
-              </Menu.Item>
-            </Link>
+            {!user && (
+              <Link href="/login" className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-indigo-500 text-white" : "text-gray-900"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      {active ? (
+                        <EditActiveIcon
+                          className="mr-2 h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <EditInactiveIcon
+                          className="mr-2 h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      )}
+                      Login
+                    </button>
+                  )}
+                </Menu.Item>
+              </Link>
+            )}
             {/* 
             </div>
             <div className="px-1 py-1">
@@ -105,7 +108,7 @@ export default function HeaderMenu({ user }: { user: User }) {
             */}
             {user && (
               <>
-                <Link href='/cart' className="px-1 py-1">
+                <Link href="/cart" className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
                       <button
@@ -129,28 +132,55 @@ export default function HeaderMenu({ user }: { user: User }) {
                     )}
                   </Menu.Item>
                 </Link>
-                <div className="px-1 py-1">
+                <Link href="/orders" className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={logout}
                         className={`${
                           active ? "bg-indigo-500 text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                       >
                         {active ? (
-                          <DeleteActiveIcon
-                            className="mr-2 h-5 w-5 text-indigo-400"
+                          <DuplicateActiveIcon
+                            className="mr-2 h-5 w-5"
                             aria-hidden="true"
                           />
                         ) : (
-                          <DeleteInactiveIcon
-                            className="mr-2 h-5 w-5 text-indigo-400"
+                          <DuplicateInactiveIcon
+                            className="mr-2 h-5 w-5"
                             aria-hidden="true"
                           />
                         )}
-                        Logout
+                        My Orders
                       </button>
+                    )}
+                  </Menu.Item>
+                </Link>
+                <div className="px-1 py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Logout>
+                        <div
+                          className={`${
+                            active
+                              ? "bg-indigo-500 text-white"
+                              : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        >
+                          {active ? (
+                            <DeleteActiveIcon
+                              className="mr-2 h-5 w-5 text-indigo-400"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <DeleteInactiveIcon
+                              className="mr-2 h-5 w-5 text-indigo-400"
+                              aria-hidden="true"
+                            />
+                          )}
+                          Logout
+                        </div>
+                      </Logout>
                     )}
                   </Menu.Item>
                 </div>

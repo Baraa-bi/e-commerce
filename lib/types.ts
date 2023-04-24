@@ -47,13 +47,12 @@ export interface Payment {
 export interface ProductLine {
   id: number;
   quantity: number;
-  price: number;
   productId: number;
   productInfo: string;
 }
 
 export interface User {
-  id: number;
+  userId: number;
   name: string;
   email: string;
   password: string;
@@ -94,7 +93,7 @@ export interface Order {
   orderDate: string;
   totalPrice: number;
   orderLines: Array<ProductLine>;
-  userInfo: User;
+  userInfo: string;
 }
 
 export enum USER_ROLE {

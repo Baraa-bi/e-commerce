@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Products({ products }: { products: Array<Product> }) {
   return (
-    <div className="my-4 mx-auto grid max-w-4xl grid-cols-4 gap-5">
+    <div className="my-4 mx-auto grid max-w-5xl grid-cols-4 gap-5">
       {products.map((t) => {
         return (
           <Link
@@ -11,7 +11,7 @@ export default function Products({ products }: { products: Array<Product> }) {
             href={`/product/${t.productId}`}
             className="cursor-pointer text-center  transition-all duration-200"
           >
-            <div className="relative h-64 flex items-end overflow-hidden bg-slate-100 transition-all duration-200">
+            <div className="relative h-72 rounded-2xl flex items-end overflow-hidden bg-slate-100 transition-all duration-200">
               <img
                 className="transition-all object-contain duration-300 hover:scale-125"
                 src={t.imageUrl}

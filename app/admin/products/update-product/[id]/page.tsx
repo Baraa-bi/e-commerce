@@ -1,7 +1,7 @@
 import ProductForm from "@/components/product/product-form";
 import SectionTitle from "@/components/section-title";
 import { productApi } from "@/lib/apis/product";
-import { Product } from "@/lib/types";
+import { Product, USER_ROLE } from "@/lib/types";
 
 const getData = (productId: number) => {
   return productApi
@@ -19,7 +19,7 @@ export default async function UpdateProduct({
   return (
     <div>
       <SectionTitle title="Update Product" />
-      <ProductForm product={product} />
+      <ProductForm role={USER_ROLE.ADMIN} product={product} />
     </div>
   );
 }
