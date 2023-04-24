@@ -37,7 +37,10 @@ export default function Admin() {
       <div className="grid grid-cols-3 gap-4 mb-4">
         {data.map((item) => {
           return (
-            <div className="shadow-xl justify-center  p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div
+              key={item.id}
+              className="shadow-xl justify-center  p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+            >
               <div className="flex items-center space-x-4">
                 <div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 text-indigo-400">

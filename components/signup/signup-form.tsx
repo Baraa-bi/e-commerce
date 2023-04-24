@@ -23,7 +23,7 @@ export default function SignupForm({ roles }: { roles: Array<any> }) {
   const [formData, setFormData] = useState(INIT_STATE);
   const [vendorModalOpen, setVendorModalOpen] = useState(false);
   const router = useRouter();
-  
+
   const onRegister = (e: FormEvent) => {
     e.preventDefault();
     const user = { ...formData, roles: [userRole] } as User;
@@ -70,6 +70,7 @@ export default function SignupForm({ roles }: { roles: Array<any> }) {
               return (
                 <button
                   type="button"
+                  key={role.roleId}
                   onClick={() => setUserRole(role)}
                   className={`px-4 py-2 text-sm font-medium border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white ${
                     userRole.roleName === role.roleName

@@ -43,11 +43,8 @@ export default async function Cart() {
               ) : (
                 shoppingCart?.cartLines?.map((productLine: ProductLine) => {
                   return (
-                    <div className="bg-gray-100">
-                      <CartItem
-                        key={productLine.id}
-                        productLine={productLine}
-                      />
+                    <div key={productLine.id} className="bg-gray-100">
+                      <CartItem productLine={productLine} />
                     </div>
                   );
                 })
