@@ -59,11 +59,13 @@ export default function AppModal() {
                   >
                     {title}
                   </Dialog.Title>
-                  <div className="mt-2">{text}</div>
+                  <img
+                    src="https://i.pinimg.com/originals/12/4d/e3/124de3d1b5e12f1d8fcec1685e634361.gif"
+                    className="absolute -z-10"
+                  />
+                  <div className="mt-2 text-gray-400">{text}</div>
 
-                  {!!layout && (
-                    <div className="mt-4">{layout(hideModal)}</div>
-                  )}
+                  {!!layout && <div className="mt-4">{layout(hideModal)}</div>}
                   <div className="mt-4 gap-4 flex">{renderActions}</div>
                 </Dialog.Panel>
               </Transition.Child>
