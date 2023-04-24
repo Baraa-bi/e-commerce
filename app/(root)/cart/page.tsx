@@ -4,7 +4,7 @@ import GuestCartItems from "@/components/cart/guest-cart-items";
 import GuestCheckout from "@/components/cart/guest-checkout";
 import { cartApi } from "@/lib/apis/cart";
 import { getUserFromCookie } from "@/lib/auth";
-import { ProductLine, ShoppingCart, User } from "@/lib/types";
+import { ProductLine, ShoppingCart, USER_ROLE, User } from "@/lib/types";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 
@@ -33,7 +33,7 @@ export default async function Cart() {
             {user ? (
               !shoppingCart?.cartLines?.length ? (
                 <>
-                  <div className="left-10">
+                  <div>
                     <img
                       className=""
                       src="https://semisearch.in/site-assets/images/no-cart.gif"
@@ -44,7 +44,12 @@ export default async function Cart() {
                 shoppingCart?.cartLines?.map((productLine: ProductLine) => {
                   return (
                     <div key={productLine.id} className="bg-gray-100">
-                      <CartItem productLine={productLine} />
+                      <CartItem
+                        role={
+                          !user ? USER_ROLE.GUEST : USER_ROLE.REGISTERED_USER
+                        }
+                        productLine={productLine}
+                      />
                     </div>
                   );
                 })
@@ -54,11 +59,13 @@ export default async function Cart() {
             )}
           </div>
         </div>
-        {user ? (
-          <Checkout shoppingCart={shoppingCart} user={user} />
-        ) : (
-          <GuestCheckout />
-        )}
+        <div>
+          {user ? (
+            <Checkout shoppingCart={shoppingCart} user={user} />
+          ) : (
+            <GuestCheckout />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import SignupForm from "@/components/signup/signup-form";
 import { authApi } from "@/lib/apis/auth";
-import { useState } from "react";
 
 const getData = () => {
   return authApi

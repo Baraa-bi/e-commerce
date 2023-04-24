@@ -9,13 +9,12 @@ const getData = async () => {
   const user = await getUserFromCookie(cookies() as RequestCookies);
   return orderApi
     .ordersByUserId(user.userId)
-    .then(({ data }) => data?.orderList ?? [])
+    .then(({ data }) => data)
     .catch((e) => []);
 };
 
 export default async function Orders() {
   const orders = await getData();
-  console.log({ orders });
   return (
     <div className="m-24">
       <SectionTitle title="My Orders" />

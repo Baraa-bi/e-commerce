@@ -9,7 +9,7 @@ const getData = async () => {
   const user = await getUserFromCookie(cookies() as RequestCookies);
   return orderApi
     .ordersByUserId(user.userId)
-    .then(({ data }) => data?.orderList ?? [])
+    .then(({ data }) => data)
     .catch((e) => []);
 };
 

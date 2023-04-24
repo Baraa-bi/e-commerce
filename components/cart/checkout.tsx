@@ -15,6 +15,7 @@ export default function Checkout({
   shoppingCart: ShoppingCart;
 }) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { showModal } = useContext(ModalContext);
   const [formData, setFormData] = useState<any>({
     paymentInfoDTO: {
@@ -52,21 +53,27 @@ export default function Checkout({
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    orderApi.placeOrder(formData).then(() => {
-      showModal({
-        title: "Your Order Placed Successfully",
-        text: "Thank you, your order has been placed",
-        actions: [
-          {
-            title: "Go To My Orders",
-            onPress: (h: any) => {
-              h();
-              router.push("/orders");
+    setLoading(true);
+    orderApi
+      .placeOrder(formData)
+      .then(() => {
+        showModal({
+          title: "Your Order Placed Successfully",
+          text: "Thank you, your order has been placed",
+          actions: [
+            {
+              title: "Go To My Orders",
+              onPress: (h: any) => {
+                h();
+                router.push("/orders");
+              },
             },
-          },
-        ],
+          ],
+        });
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    });
   };
 
   if (!shoppingCart?.cartLines?.length)
@@ -94,7 +101,7 @@ export default function Checkout({
   return (
     <form onSubmit={onFormSubmit}>
       {" "}
-      <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+      <div className="mt-10 bg-gray-100 shadow-lg border rounded-lg  px-4 pt-8 lg:mt-0">
         <p className="text-xl font-medium">Payment Details</p>
         <p className="text-gray-400">
           Complete your order by providing your payment details.
@@ -352,7 +359,8 @@ export default function Checkout({
         </div>
         <button
           type="submit"
-          className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+          loading={loading}
+          className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3.5 font-medium text-white"
         >
           Place Order
         </button>

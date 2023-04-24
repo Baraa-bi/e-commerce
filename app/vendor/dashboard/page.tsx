@@ -1,44 +1,45 @@
-"use client";
-import Image from "next/image";
 import { Inter } from "next/font/google";
 //@ts-ignore
 import AnimatedNumber from "react-animated-number";
 import SectionTitle from "@/components/section-title";
+import { reportApi } from "@/lib/apis/report";
+import AppAnimatedNumber from "@/components/animated-number";
+import { getUserFromCookie } from "@/lib/auth";
+import { cookies } from "next/headers";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 
-const inter = Inter({ subsets: ["latin"] });
+interface Stats {
+  noOfSales: number;
+  annualProfit: number;
+  annualRevenue: number;
+}
 
-const data = [
-  {
-    id: 1,
-    title: "Total Sales",
-    count: 124,
-  },
-  {
-    id: 2,
-    title: "Annual Profit",
-    count: 55,
-  },
-  {
-    id: 3,
-    title: "Annual Loss",
-    count: 414,
-  },
-  {
-    id: 4,
-    title: "Annual revenue",
-    count: 354,
-  },
-];
+const STATS_NAMES = {
+  noOfSales: "Total Sales",
+  annualProfit: "Annual Profit",
+  annualRevenue: "Annual revenue",
+};
 
-export default function Admin() {
+const getData = async () => {
+  const user = await getUserFromCookie(cookies() as RequestCookies);
+  return reportApi
+    .summary(user.userId)
+    .then(({ data }) => data)
+    .catch((e) => console.log(e.response));
+};
+
+export default async function Admin() {
+  const stats = (await getData()) as any;
+  console.log(stats);
   return (
     <>
       <SectionTitle title="Dashboard" />
       <div className="grid grid-cols-3 gap-4 mb-4">
-        {data.map((item) => {
+        {Object.keys(stats).map((key: any) => {
+          if (key === "annualLoss") return null;
           return (
             <div
-              key={item.id}
+              key={key}
               className="shadow-xl justify-center  p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
             >
               <div className="flex items-center space-x-4">
@@ -63,19 +64,9 @@ export default function Admin() {
                 </div>
                 <div>
                   <div className="text-4xl font-bold mt-1 text-gray-900">
-                    <AnimatedNumber
-                      component="text"
-                      value={item.count}
-                      style={{
-                        color: "black",
-                        transition: "0.8s ease-out",
-                        transitionProperty: "background-color, color, opacity",
-                      }}
-                      duration={600}
-                      formatValue={(n: string) => parseInt(n ?? 0)}
-                    />
+                    <AppAnimatedNumber count={stats[key]} />
                   </div>
-                  <div className="text-gray-400"> {item.title}</div>
+                  <div className="text-gray-400"> {STATS_NAMES[key]}</div>
                 </div>
               </div>
             </div>

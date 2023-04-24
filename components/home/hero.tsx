@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="bg-white">
+    <section className="bg-slate-100 p-8 rounded-xl">
       <div className="mx-auto grid max-w-screen-xl px-4 pt-8 lg:grid-cols-12 lg:gap-8 xl:gap-0">
         <div className="mr-auto place-self-center lg:col-span-7">
           <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl">

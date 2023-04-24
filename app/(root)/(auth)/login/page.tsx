@@ -25,7 +25,6 @@ const Page = () => {
         return data;
       })
       .then((jwt) => {
-        setLoading(false);
         const user = decodeJwt(jwt) as any;
         if (user?.role.includes(USER_ROLE.ADMIN))
           router.push("/admin/dashboard");
@@ -40,8 +39,8 @@ const Page = () => {
       });
   };
   return (
-    <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8  bg-white p-8 rounded shadow">
+    <div className="min-h-full flex shadow-3xl first-letter:items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md shadow-2xl w-full space-y-8  bg-slate-100 p-12 rounded-2xl">
         <div>
           <img
             className="mx-auto h-12 w-auto"
@@ -98,7 +97,6 @@ const Page = () => {
 
         <div className="mx-auto text-center">
           {` Don't have an account? `}
-
           <Link
             href="/signup"
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"

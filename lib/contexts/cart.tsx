@@ -87,8 +87,11 @@ export const CartProvider = (props: { children: any }) => {
           },
         },
         {
-          title: "Dismiss",
-          onPress: (h: any) => h(),
+          title: "Back to Home",
+          onPress: (h: any) => {
+            h();
+            router.push("/");
+          },
         },
       ],
     });

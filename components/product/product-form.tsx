@@ -8,6 +8,7 @@ import { FormEvent, useEffect, useState } from "react";
 const DEFAULT_IMAGE =
   "https://gimetalusa.com/assets/images/product/placeholder.jpg";
 export default function ProductForm({
+  categories,
   product,
   user,
   role,
@@ -15,8 +16,8 @@ export default function ProductForm({
   product?: Product;
   user?: User;
   role: USER_ROLE;
+  categories: Array<Category>;
 }) {
-  const [categories, setCategories] = useState<Array<Category>>([]);
   //@ts-ignore
   const userId = product?.user?.userId;
   const [formData, setFormData] = useState(
@@ -29,13 +30,9 @@ export default function ProductForm({
           itemCost: 0,
           description: "",
           imageUrl: "",
-          categoryId: 0,
+          categoryId: categories[0].categoryId,
         }
   );
-
-  useEffect(() => {
-    categoriesApi.all().then(({ data }: any) => setCategories(data));
-  }, []);
 
   const router = useRouter();
 

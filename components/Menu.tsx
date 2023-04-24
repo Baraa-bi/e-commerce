@@ -15,11 +15,25 @@ export default function HeaderMenu({ user }: { user: User }) {
     router.refresh();
   };
   return (
-    <div className=" w-56 text-right">
+    <div>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full justify-center rounded-md bg-indigo-900 bg-opacity-60 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            {user ? `Hello, ${user.name}` : "Settings"}
+          <Menu.Button className="flex mr-3 text-sm p-1.5 bg-gray-300 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              className="w-8 h-8 rounded-full text-indigo-500 bg-transparent"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              ></path>
+            </svg>
           </Menu.Button>
         </div>
         <Transition
@@ -106,8 +120,6 @@ export default function HeaderMenu({ user }: { user: User }) {
                 )}
               </Menu.Item>
             */}
-            {user && (
-              <>
                 <Link href="/cart" className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
@@ -132,6 +144,8 @@ export default function HeaderMenu({ user }: { user: User }) {
                     )}
                   </Menu.Item>
                 </Link>
+            {user && (
+              <>
                 <Link href="/orders" className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (

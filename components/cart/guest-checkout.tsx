@@ -8,9 +8,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { userInfo } from "os";
 import { FormEvent, useContext, useState } from "react";
+import Button from "../buttont";
 
 export default function GuestCheckout() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { productLines, totalPrice } = useContext(CartContext);
   const { showModal } = useContext(ModalContext);
   const [formData, setFormData] = useState<any>({
@@ -45,7 +47,6 @@ export default function GuestCheckout() {
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     const shoppingCart = {
       totalPrice,
       cartLines: Object.keys(productLines).map((key) => {
@@ -60,28 +61,31 @@ export default function GuestCheckout() {
         };
       }),
     };
- 
 
-    orderApi.placeOrderForGuestUser(formData.userInfo, {
-      paymentInfoDTO: formData.paymentInfoDTO,
-      shoppingCart
-    });
-
-    // orderApi.placeOrderForGuestUser(formData).then(() => {
-    //   showModal({
-    //     title: "Your Order Placed Successfully",
-    //     text: "Thank you, your order has been placed",
-    //     actions: [
-    //       {
-    //         title: "Go To My Orders",
-    //         onPress: (h: any) => {
-    //           h();
-    //           router.push("/orders");
-    //         },
-    //       },
-    //     ],
-    //   });
-    // });
+    setLoading(true);
+    orderApi
+      .placeOrderForGuestUser(formData.userInfo, {
+        paymentInfo: formData.paymentInfoDTO,
+        shoppingCart,
+      })
+      .then(() => {
+        showModal({
+          title: "Your Order Placed Successfully",
+          text: "Thank you, your order has been placed, we have sent you an email for your order detials",
+          actions: [
+            {
+              title: "Got It, Thanks",
+              onPress: (h: any) => {
+                h();
+                router.push("/");
+              },
+            },
+          ],
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   if (!Object.keys(productLines)?.length)
@@ -108,7 +112,7 @@ export default function GuestCheckout() {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+      <div className="mt-10 bg-gray-100 shadow-lg border rounded-lg px-4 pt-8 lg:mt-0">
         <p className="text-xl font-medium">Payment Details</p>
         <p className="text-gray-400">
           Complete your order by providing your payment details.
@@ -360,12 +364,13 @@ export default function GuestCheckout() {
             ${parseFloat(`${totalPrice}`).toFixed(2)}
           </p>
         </div>
-        <button
+        <Button
           type="submit"
-          className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+          loading={loading}
+          className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3.5 font-medium text-white"
         >
           Place Order
-        </button>
+        </Button>
       </div>
     </form>
   );

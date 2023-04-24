@@ -27,7 +27,6 @@ export default function ApiInterceptor() {
         return Promise.resolve(response);
       },
       async (error: any) => {
-        console.log(error?.response?.data);
         showModal({
           title: "Something went wrong",
           text: `${error?.response?.data}`,

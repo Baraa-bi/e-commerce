@@ -19,7 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Navbar user={user} />
-        <div className="pt-16">{children}</div>
+        <div className="m-12 bg-white rounded-3xl shadow p-4">{children}</div>
         <Footer />
       </body>
     </html>

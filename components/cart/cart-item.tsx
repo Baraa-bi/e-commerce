@@ -11,7 +11,7 @@ export default function CartItem({
   productLine: ProductLine;
   role?: USER_ROLE;
 }) {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(productLine.quantity);
   const product = JSON.parse(productLine.productInfo) as Product;
 
   const { deleteCartItem, updateCartItem } = useContext(CartContext);
@@ -39,7 +39,11 @@ export default function CartItem({
                     updateCartItem(
                       role === USER_ROLE.GUEST
                         ? { id: product.productId, quantity }
-                        : { id: productLine.id, quantity },
+                        : {
+                            id: productLine.id,
+                            quantity,
+                            productPrice: product?.price,
+                          },
                       role
                     );
                     return quantity;
@@ -60,7 +64,11 @@ export default function CartItem({
                     updateCartItem(
                       role === USER_ROLE.GUEST
                         ? { id: product.productId, quantity }
-                        : { id: productLine.id, quantity },
+                        : {
+                            id: productLine.id,
+                            quantity,
+                            productPrice: product?.price,
+                          },
                       role
                     );
                     return quantity;
@@ -82,7 +90,7 @@ export default function CartItem({
           onClick={() =>
             deleteCartItem(
               role === USER_ROLE.GUEST ? product.productId : productLine.id,
-              USER_ROLE.GUEST
+              role
             )
           }
           className="text-white bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"

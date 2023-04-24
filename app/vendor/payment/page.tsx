@@ -11,6 +11,7 @@ import { FormEvent, useContext, useMemo, useState } from "react";
 
 //@ts-ignore
 import AnimatedNumber from "react-animated-number";
+import Button from "@/components/buttont";
 
 const INIT_STATE = {
   cardNumber: "",
@@ -24,6 +25,7 @@ const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
 
 export default function Payment() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { showModal } = useContext(ModalContext);
   const [formData, setFormData] = useState<Payment>(INIT_STATE);
 
@@ -36,7 +38,7 @@ export default function Payment() {
   const onSubmitPayment = async (e: FormEvent) => {
     e.preventDefault();
     const user = await getUser();
-    console.log({ user, c: user.userId });
+    setLoading(true);
     paymentApi
       .vendorRegistrationFee(user.userId, formData)
       .then(() => {
@@ -44,24 +46,27 @@ export default function Payment() {
           .fullyVerifyVendor(user.userId)
           .then(({ data }) => {
             cookie.save(COOKIE_NAME, data, { path: "/" });
-            router.push("/vendor/products/add-product");
+
+            showModal({
+              title: "Payment Done Successfully",
+              text: "Thank you, You are now fully-verified, enjoy managing your products",
+              actions: [
+                {
+                  title: "Let's Add your first product",
+                  onPress: (h: any) => {
+                    h();
+                    router.push("/vendor/products/add-product");
+                  },
+                },
+              ],
+            });
           })
           .catch((e) => {
             console.log(e.response);
           });
       })
-      .catch((e) => {
-        showModal({
-          text: e.response.data,
-          actions: [
-            {
-              title: "OK",
-              onPress: (h: any) => {
-                h();
-              },
-            },
-          ],
-        });
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -225,9 +230,10 @@ export default function Payment() {
           </svg>
         </label>
         <div className="mt-8 w-full">
-          <button
+          <Button
             type="submit"
-            className="text-white text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            loading={loading}
+            className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <svg
               aria-hidden="true"
@@ -239,7 +245,7 @@ export default function Payment() {
               <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
             </svg>
             Make a Payment
-          </button>
+          </Button>
         </div>
       </form>
     </div>
