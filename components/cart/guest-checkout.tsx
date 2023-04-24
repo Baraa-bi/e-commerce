@@ -60,12 +60,7 @@ export default function GuestCheckout() {
         };
       }),
     };
-
-    console.log({
-      userInfo: formData.userInfo,
-      paymentInfoDTO: formData.paymentInfoDTO,
-      shoppingCart,
-    });
+ 
 
     orderApi.placeOrderForGuestUser(formData.userInfo, {
       paymentInfoDTO: formData.paymentInfoDTO,

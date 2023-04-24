@@ -193,7 +193,7 @@ export default function HeaderMenu({ user }: { user: User }) {
   );
 }
 
-function EditInactiveIcon(props) {
+function EditInactiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -211,7 +211,7 @@ function EditInactiveIcon(props) {
   );
 }
 
-function EditActiveIcon(props) {
+function EditActiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -229,7 +229,7 @@ function EditActiveIcon(props) {
   );
 }
 
-function DuplicateInactiveIcon(props) {
+function DuplicateInactiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -253,7 +253,7 @@ function DuplicateInactiveIcon(props) {
   );
 }
 
-function DuplicateActiveIcon(props) {
+function DuplicateActiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -277,7 +277,7 @@ function DuplicateActiveIcon(props) {
   );
 }
 
-function ArchiveInactiveIcon(props) {
+function ArchiveInactiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -308,7 +308,7 @@ function ArchiveInactiveIcon(props) {
   );
 }
 
-function ArchiveActiveIcon(props) {
+function ArchiveActiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -339,7 +339,7 @@ function ArchiveActiveIcon(props) {
   );
 }
 
-function MoveInactiveIcon(props) {
+function MoveInactiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -354,7 +354,7 @@ function MoveInactiveIcon(props) {
   );
 }
 
-function MoveActiveIcon(props) {
+function MoveActiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -369,7 +369,7 @@ function MoveActiveIcon(props) {
   );
 }
 
-function DeleteInactiveIcon(props) {
+function DeleteInactiveIcon(props: any) {
   return (
     <svg
       {...props}
@@ -392,7 +392,7 @@ function DeleteInactiveIcon(props) {
   );
 }
 
-function DeleteActiveIcon(props) {
+function DeleteActiveIcon(props: any) {
   return (
     <svg
       {...props}

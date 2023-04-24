@@ -22,7 +22,7 @@ export default function GuestCartItems() {
       {Object.keys(productLines).map((key) => {
         const productLine = productLines[key];
         return (
-          <div className="bg-gray-100">
+          <div key={key} className="bg-gray-100">
             <CartItem
               role={USER_ROLE.GUEST}
               key={productLine.id}

@@ -9,7 +9,7 @@ export const orderApi = {
   placeOrder: (orderDetails: OrderDetails) => {
     return request.post(`${ORDER_URL}/api/v1/orders`, orderDetails);
   },
-  placeOrderForGuestUser: (userInfo: User, orderDetails: OrderDetails) => {
+  placeOrderForGuestUser: (userInfo: User, orderDetails: any) => {
     return request.post(`${ORDER_URL}/api/v1/orders/guestUser`, {
       userInfo,
       ...orderDetails,
