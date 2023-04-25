@@ -123,7 +123,7 @@ export default function SignupForm({ roles }: { roles: Array<any> }) {
               type="email"
               id="email"
               className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="name@shoppify.com"
+              placeholder="name@Shoppify.com"
               required
               value={formData.email}
               onChange={(e) =>
@@ -143,7 +143,7 @@ export default function SignupForm({ roles }: { roles: Array<any> }) {
             <input
               type="text"
               className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="name@shoppify.com"
+              placeholder="name@Shoppify.com"
               required
               value={formData.telephoneNumber}
               onChange={(e) =>

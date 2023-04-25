@@ -3,8 +3,8 @@ import { ORDER_URL } from "../constants";
 import { OrderDetails, User } from "../types";
 
 export const orderApi = {
-  all: () => {
-    return request.get(`${ORDER_URL}/api/v1/orders`);
+  all: (params?: any) => {
+    return request.get(`${ORDER_URL}/api/v1/orders`, { params });
   },
   placeOrder: (orderDetails: OrderDetails) => {
     return request.post(`${ORDER_URL}/api/v1/orders`, orderDetails);

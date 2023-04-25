@@ -24,7 +24,7 @@ const getData = () => {
     .catch((e) => console.log(e.response));
 };
 
-export default async function Admin() {
+export default async function AdminDashboard() {
   const stats = (await getData()) as any;
   console.log(stats)
   return (
