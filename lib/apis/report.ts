@@ -1,5 +1,44 @@
 import { request } from ".";
-import { REPORT_URL } from "../constants";
+
+export const reportApi = {
+  summary: (vendorId?: number) => {
+    return request.get(`/report-service/summary`, {
+      params: {
+        vendorId,
+        fromDate: dateFormater(new Date(), "-"),
+        toDate: dateFormater(new Date(), "-"),
+      },
+    });
+  },
+  annualProfit: (vendorId?: number) => {
+    return request.get(`/report-service/annual-profit`, {
+      params: {
+        vendorId,
+      },
+    });
+  },
+  annualRevenue: (vendorId?: number) => {
+    return request.get(`/report-service/annual-revenue`, {
+      params: {
+        vendorId,
+      },
+    });
+  },
+  sales: (vendorId?: number) => {
+    return request.get(`/report-service/sales`, {
+      params: {
+        vendorId,
+      },
+    });
+  },
+  sendEmail: (userId: number, message?: string) => {
+    return request.post(`/notification-service/email`, {
+      userId,
+      message,
+      emailType: "OtherCommunication",
+    });
+  },
+};
 
 const dateFormater = (date: Date, separator: string) => {
   let day = date.getDate();
@@ -18,44 +57,4 @@ const dateFormater = (date: Date, separator: string) => {
   // now we have day, month and year
   // use the separator to join them
   return year + separator + month + separator + day;
-};
-
-export const reportApi = {
-  summary: (vendorId?: number) => {
-    return request.get(`${REPORT_URL}/report-service/summary`, {
-      params: {
-        vendorId,
-        fromDate: dateFormater(new Date(), "-"),
-        toDate: dateFormater(new Date(), "-"),
-      },
-    });
-  },
-  annualProfit: (vendorId?: number) => {
-    return request.get(`${REPORT_URL}/report-service/annual-profit`, {
-      params: {
-        vendorId,
-      },
-    });
-  },
-  annualRevenue: (vendorId?: number) => {
-    return request.get(`${REPORT_URL}/report-service/annual-revenue`, {
-      params: {
-        vendorId,
-      },
-    });
-  },
-  sales: (vendorId?: number) => {
-    return request.get(`${REPORT_URL}/report-service/sales`, {
-      params: {
-        vendorId,
-      },
-    });
-  },
-  sendEmail: (userId: number, message?: string) => {
-    return request.post(`${REPORT_URL}/notification-service/email`, {
-      userId,
-      message,
-      emailType: "OtherCommunication",
-    });
-  },
 };
