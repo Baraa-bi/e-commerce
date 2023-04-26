@@ -1,4 +1,5 @@
 "use client";
+//@ts-ignore
 import AnimatedNumber from "react-animated-number";
 
 export default function AppAnimatedNumber(props: { count: number }) {

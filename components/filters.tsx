@@ -104,29 +104,8 @@ export default function Filters({ vendors }: { vendors?: Array<User> }) {
       .finally(() => setLoading(false));
   };
 
-  //   const downloadPDF = () => {
-  //     htmlToImage
-  //       //@ts-ignore
-  //       .toPng(document.getElementById("divToPrint"), { quality: 0.95 })
-  //       .then(function (dataUrl) {
-  //         const pdf = new jsPDF();
-  //         //@ts-ignore
-  //         pdf.addImage(dataUrl, "PNG");
-  //         pdf.save("download.pdf");
-  //       });
-  //   };
-
-  const downloadPdfDocument = () => {
-    const input: any = document.getElementById("rootElementId");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      pdf.save(`report.pdf`);
-    });
-  };
-
   const downloadPDF = async () => {
+    //@ts-ignore
     const dataUrl = await htmlToImage.toPng(ref.current);
 
     // download image
@@ -134,22 +113,6 @@ export default function Filters({ vendors }: { vendors?: Array<User> }) {
     link.download = "report.png";
     link.href = dataUrl;
     link.click();
-  };
-
-  const downloadPDF3 = () => {
-    const doc = new jsPDF({
-      format: "a4",
-      unit: "px",
-    });
-
-    // Adding the fonts.
-    doc.setFont("Inter-Regular", "normal");
-
-    doc.html(ref.current, {
-      async callback(doc) {
-        await doc.save("document");
-      },
-    });
   };
 
   return (

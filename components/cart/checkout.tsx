@@ -6,6 +6,7 @@ import { ShoppingCart, User } from "@/lib/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useContext, useState } from "react";
+import Button from "../buttont";
 
 export default function Checkout({
   user,
@@ -357,13 +358,13 @@ export default function Checkout({
             ${parseFloat(`${shoppingCart.totalPrice}`).toFixed(2)}
           </p>
         </div>
-        <button
+        <Button
           type="submit"
           loading={loading}
           className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3.5 font-medium text-white"
         >
           Place Order
-        </button>
+        </Button>
       </div>
     </form>
   );

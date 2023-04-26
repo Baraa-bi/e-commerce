@@ -26,12 +26,14 @@ const getData = () => {
 
 export default async function AdminDashboard() {
   const stats = (await getData()) as any;
-  console.log(stats)
+  console.log(stats);
   return (
     <>
       <SectionTitle title="Dashboard" />
       <div className="grid grid-cols-3 gap-4 mb-4">
         {Object.keys(stats).map((key: any) => {
+          //@ts-ignore
+          const statName = STATS_NAMES[key];
           if (key === "annualLoss") return null;
           return (
             <div
@@ -62,7 +64,7 @@ export default async function AdminDashboard() {
                   <div className="text-4xl font-bold mt-1 text-gray-900">
                     <AppAnimatedNumber count={stats[key]} />
                   </div>
-                  <div className="text-gray-400"> {STATS_NAMES[key]}</div>
+                  <div className="text-gray-400"> {statName}</div>
                 </div>
               </div>
             </div>
