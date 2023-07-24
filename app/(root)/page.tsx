@@ -1,6 +1,3 @@
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import type { ReactElement } from "react";
 import Features from "../../components/home/features";
 import Hero from "../../components/home/hero";
 import Products from "../../components/home/products/products";
@@ -17,7 +14,6 @@ const getData = () => {
 
 const Page = async () => {
   const products = await getData();
-  console.log({ products });
   return (
     <div className="">
       <Hero />

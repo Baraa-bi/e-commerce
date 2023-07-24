@@ -31,9 +31,9 @@ export default async function VendorLayout({
               />
               <div className="ml-3 overflow-hidden">
                 <p className="uppercase text-sm font-medium text-slate-900">
-                  {user.name}
+                  {user?.name}
                 </p>
-                <p className="text-sm text-slate-500 truncate">{user.email}</p>
+                <p className="text-sm text-slate-500 truncate">{user?.email}</p>
               </div>
             </li>
             <li>

@@ -3,10 +3,9 @@
 import { orderApi } from "@/lib/apis/orders";
 import { CartContext } from "@/lib/contexts/cart";
 import { ModalContext } from "@/lib/contexts/modal";
-import { Product, ShoppingCart, User } from "@/lib/types";
+import { Product } from "@/lib/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { userInfo } from "os";
 import { FormEvent, useContext, useState } from "react";
 import Button from "../buttont";
 

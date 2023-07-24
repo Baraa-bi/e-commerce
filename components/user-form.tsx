@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { USER_ROLE, User } from "@/lib/types";
+import { USER_ROLE } from "@/lib/types";
 import { authApi } from "@/lib/apis/auth";
-import { AnyARecord } from "dns";
 
 export default function UserForm({ user }: { user: any }) {
   const router = useRouter();

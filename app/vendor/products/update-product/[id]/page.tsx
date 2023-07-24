@@ -2,7 +2,7 @@ import ProductForm from "@/components/product/product-form";
 import SectionTitle from "@/components/section-title";
 import { categoriesApi } from "@/lib/apis/category";
 import { productApi } from "@/lib/apis/product";
-import { Product, USER_ROLE } from "@/lib/types";
+import { USER_ROLE } from "@/lib/types";
 
 const getData = async (productId: number) => {
   const categories = await categoriesApi

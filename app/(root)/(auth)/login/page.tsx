@@ -2,13 +2,12 @@
 
 import { authApi } from "@/lib/apis/auth";
 import Link from "next/link";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { COOKIE_NAME } from "@/lib/constants";
 import cookie from "react-cookies";
 import { useRouter } from "next/navigation";
 import { decodeJwt } from "jose";
 import { USER_ROLE } from "@/lib/types";
-import Loading from "../loading";
 import Button from "@/components/buttont";
 
 const Page = () => {

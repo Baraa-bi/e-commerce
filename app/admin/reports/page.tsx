@@ -13,6 +13,7 @@ const getData = async () => {
     })
     .catch((e) => []);
 };
+
 export default async function Reports() {
   const vendors = await getData();
   return (

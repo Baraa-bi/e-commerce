@@ -1,8 +1,6 @@
 "use client";
-import { authApi } from "@/lib/apis/auth";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-import AppModal from "../app-modal";
 import { productApi } from "@/lib/apis/product";
 import { ModalContext } from "@/lib/contexts/modal";
 import { reportApi } from "@/lib/apis/report";

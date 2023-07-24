@@ -1,9 +1,8 @@
 "use client";
-import { categoriesApi } from "@/lib/apis/category";
 import { productApi } from "@/lib/apis/product";
 import { Category, Product, USER_ROLE, User } from "@/lib/types";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
 const DEFAULT_IMAGE =
   "https://gimetalusa.com/assets/images/product/placeholder.jpg";

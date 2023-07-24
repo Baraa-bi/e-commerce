@@ -2,7 +2,6 @@
 import { authApi } from "@/lib/apis/auth";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-import AppModal from "./app-modal";
 import { ModalContext } from "@/lib/contexts/modal";
 
 export default function VerifyVendor({ vendorId }: { vendorId: number }) {

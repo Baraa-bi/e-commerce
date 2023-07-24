@@ -1,22 +1,14 @@
-import { Inter } from "next/font/google";
 import Link from "next/link";
 import { categoriesApi } from "@/lib/apis/category";
 import { Category } from "@/lib/types";
 import DeleteCategory from "@/components/category/delete-category";
 import SectionTitle from "@/components/section-title";
 
-const inter = Inter({ subsets: ["latin"] });
-
 const getData = async () => {
   return categoriesApi
     .all()
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((e) => {
-      console.log(e);
-      return [];
-    });
+    .then(({ data }) => data)
+    .catch((e) => []);
 };
 
 export default async function Categories() {
@@ -25,8 +17,8 @@ export default async function Categories() {
     <>
       <SectionTitle title="Categories">
         <Link
-          href="/admin/categories/add-category"
           type="button"
+          href="/admin/categories/add-category"
           className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         >
           Add Category
@@ -37,13 +29,13 @@ export default async function Categories() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                 id
+                id
               </th>
               <th scope="col" className="px-6 py-3">
-                 name
+                name
               </th>
               <th scope="col" className="px-6 py-3">
-                 description
+                description
               </th>
               <th scope="col" className="px-6 py-3">
                 Edit

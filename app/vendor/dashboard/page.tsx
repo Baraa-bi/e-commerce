@@ -1,18 +1,9 @@
-import { Inter } from "next/font/google";
-//@ts-ignore
-import AnimatedNumber from "react-animated-number";
 import SectionTitle from "@/components/section-title";
 import { reportApi } from "@/lib/apis/report";
 import AppAnimatedNumber from "@/components/animated-number";
 import { getUserFromCookie } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-
-interface Stats {
-  noOfSales: number;
-  annualProfit: number;
-  annualRevenue: number;
-}
 
 const STATS_NAMES = {
   noOfSales: "Total Sales",
@@ -30,7 +21,6 @@ const getData = async () => {
 
 export default async function Admin() {
   const stats = (await getData()) as any;
-  console.log(stats);
   return (
     <>
       <SectionTitle title="Dashboard" />

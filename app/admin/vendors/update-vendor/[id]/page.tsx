@@ -7,7 +7,7 @@ const getData = (userId: number) => {
   return authApi
     .userById(userId)
     .then(({ data }) => data)
-    .catch((e) => null);
+    .catch((e) => {});
 };
 
 export default async function UpdateVendor({

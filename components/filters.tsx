@@ -7,12 +7,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Order, User } from "@/lib/types";
 import Button from "./buttont";
 import { orderApi } from "@/lib/apis/orders";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-
 import * as htmlToImage from "html-to-image";
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
-import AdminDashboard from "@/app/admin/dashboard/page";
 
 const fromOptions = {
   title: "Select From Date",

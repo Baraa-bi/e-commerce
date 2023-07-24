@@ -1,6 +1,3 @@
-import { getUserFromCookie } from "@/lib/auth";
-import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import HeaderMenu from "./Menu";
 import { User } from "@/lib/types";

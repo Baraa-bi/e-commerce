@@ -1,11 +1,8 @@
 import AddToCart from "@/components/product/add-to-cart";
 import { productApi } from "@/lib/apis/product";
-import { getUser, getUserFromCookie } from "@/lib/auth";
+import { getUserFromCookie } from "@/lib/auth";
 import { Product } from "@/lib/types";
-import {
-  RequestCookie,
-  RequestCookies,
-} from "next/dist/compiled/@edge-runtime/cookies";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 
 const getData = async (productId: number) => {

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Trending() {
   return (
@@ -8,7 +7,11 @@ export default function Trending() {
         <div className="grid w-full max-w-7xl gap-3 md:grid-cols-4">
           {[4, 11, 1, 44].map((t) => {
             return (
-              <Link key={t} href="/" className="col-span-2 hover:scale-105  transition-all duration-300 ease-in-out">
+              <Link
+                key={t}
+                href="/"
+                className="col-span-2 hover:scale-105  transition-all duration-300 ease-in-out"
+              >
                 <img
                   src={`/assets/promo-banner-${t}.webp`}
                   alt="promo banner 1 image"

@@ -1,15 +1,6 @@
-import { Inter } from "next/font/google";
-//@ts-ignore
-import AnimatedNumber from "react-animated-number";
 import SectionTitle from "@/components/section-title";
 import { reportApi } from "@/lib/apis/report";
 import AppAnimatedNumber from "@/components/animated-number";
-
-interface Stats {
-  noOfSales: number;
-  annualProfit: number;
-  annualRevenue: number;
-}
 
 const STATS_NAMES = {
   noOfSales: "Total Sales",
@@ -26,7 +17,6 @@ const getData = () => {
 
 export default async function AdminDashboard() {
   const stats = (await getData()) as any;
-  console.log(stats);
   return (
     <>
       <SectionTitle title="Dashboard" />
